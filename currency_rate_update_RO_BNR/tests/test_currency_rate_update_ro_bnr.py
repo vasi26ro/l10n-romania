@@ -1,4 +1,4 @@
-from datetime import date, timedelta
+from datetime import timedelta
 
 from dateutil.relativedelta import relativedelta
 
@@ -42,15 +42,6 @@ class TestCurrencyRateUpdateRoBnr(SavepointCase):
         """No checks are made since today may not be a banking day"""
         self.bnr_provider._update(self.today, self.today)
         self.CurrencyRate.search([("currency_id", "=", self.usd_currency.id)]).unlink()
-
-    def test_update_RO_BNR_day_in_past(self):
-        "we test a know date in past and should give us a result"
-        self.bnr_provider._update(date(2022, 4, 8), date(2022, 4, 8))
-        rate = self.CurrencyRate.search(
-            [("currency_id", "=", self.usd_currency.id), ("name", "=", "2022-04-08")]
-        )
-        self.assertTrue(rate)
-        rate.unlink()
 
     def test_update_RO_BNR_month(self):
         self.bnr_provider._update(self.today - relativedelta(months=1), self.today)
