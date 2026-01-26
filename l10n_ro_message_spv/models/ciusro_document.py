@@ -32,6 +32,21 @@ class L10nRoEdiDocument(models.Model):
             return result
 
         content = result["content"]
+
+        # Check if response is a JSON error message from ANAF
+        # (e.g., download limit exceeded: "S-au facut deja 10 descarcari")
+        try:
+            json_response = json.loads(content.decode("utf-8"))
+            if "eroare" in json_response:
+                error_msg = json_response.get("eroare", "Unknown ANAF error")
+                _logger.warning(
+                    f"ANAF API error for download {key_download}: {error_msg}"
+                )
+                return {"error": error_msg}
+        except (json.JSONDecodeError, UnicodeDecodeError):
+            # Not JSON, continue with ZIP parsing
+            _logger.debug("Response is not JSON, proceeding with ZIP parsing")
+
         # E-Factura gives download response in ZIP format
         try:
             zip_ref = zipfile.ZipFile(io.BytesIO(content))
