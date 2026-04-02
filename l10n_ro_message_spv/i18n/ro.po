@@ -38,6 +38,12 @@ msgid "Amount"
 msgstr "Sumă"
 
 #. module: l10n_ro_message_spv
+#. odoo-python
+#: code:addons/l10n_ro_message_spv/models/message_spv.py:0
+msgid "An error occurred while connecting to ANAF service: %s"
+msgstr ""
+
+#. module: l10n_ro_message_spv
 #: model:ir.model.fields,field_description:l10n_ro_message_spv.field_l10n_ro_message_spv__attachment_id
 msgid "Attachment"
 msgstr "Atașament"
@@ -54,8 +60,20 @@ msgstr "Companii"
 
 #. module: l10n_ro_message_spv
 #: model:ir.model.fields,field_description:l10n_ro_message_spv.field_l10n_ro_message_spv__company_id
+#: model_terms:ir.ui.view,arch_db:l10n_ro_message_spv.view_l10n_ro_message_spv_search
 msgid "Company"
 msgstr "Companie"
+
+#. module: l10n_ro_message_spv
+#: model:ir.model,name:l10n_ro_message_spv.model_res_config_settings
+msgid "Config Settings"
+msgstr ""
+
+#. module: l10n_ro_message_spv
+#. odoo-python
+#: code:addons/l10n_ro_message_spv/models/message_spv.py:0
+msgid "Could not connect to ANAF service. Please try again later."
+msgstr ""
 
 #. module: l10n_ro_message_spv
 #: model_terms:ir.ui.view,arch_db:l10n_ro_message_spv.view_l10n_ro_message_spv_form
@@ -112,6 +130,11 @@ msgid "Download"
 msgstr "Descarcă"
 
 #. module: l10n_ro_message_spv
+#: model:ir.model.fields,field_description:l10n_ro_message_spv.field_l10n_ro_message_spv__download_attempts
+msgid "Download Attempts"
+msgstr ""
+
+#. module: l10n_ro_message_spv
 #: model:ir.model.fields.selection,name:l10n_ro_message_spv.selection__l10n_ro_message_spv__state__downloaded
 msgid "Downloaded"
 msgstr "Descărcat"
@@ -137,6 +160,7 @@ msgstr "PDF încorporat"
 #: model:ir.model.fields,field_description:l10n_ro_message_spv.field_l10n_ro_message_spv__error
 #: model:ir.model.fields.selection,name:l10n_ro_message_spv.selection__l10n_ro_message_spv__message_type__error
 #: model:ir.model.fields.selection,name:l10n_ro_message_spv.selection__l10n_ro_message_spv__state__error
+#: model_terms:ir.ui.view,arch_db:l10n_ro_message_spv.view_l10n_ro_message_spv_search
 msgid "Error"
 msgstr "Eroare"
 
@@ -231,6 +255,11 @@ msgid "Journal Item"
 msgstr "Element jurnal"
 
 #. module: l10n_ro_message_spv
+#: model:ir.model.fields,field_description:l10n_ro_message_spv.field_l10n_ro_message_spv__last_download_date
+msgid "Last Download Date"
+msgstr ""
+
+#. module: l10n_ro_message_spv
 #: model:ir.model.fields,field_description:l10n_ro_message_spv.field_l10n_ro_message_spv__write_uid
 msgid "Last Updated by"
 msgstr "Ultima actualizare de"
@@ -239,6 +268,12 @@ msgstr "Ultima actualizare de"
 #: model:ir.model.fields,field_description:l10n_ro_message_spv.field_l10n_ro_message_spv__write_date
 msgid "Last Updated on"
 msgstr "Ultima actualizare la"
+
+#. module: l10n_ro_message_spv
+#: model:ir.model.fields,field_description:l10n_ro_message_spv.field_res_company__l10n_ro_download_einvoices_days
+#: model:ir.model.fields,field_description:l10n_ro_message_spv.field_res_config_settings__l10n_ro_download_einvoices_days
+msgid "Maximum number of days to download e-invoices."
+msgstr ""
 
 #. module: l10n_ro_message_spv
 #: model:ir.model.fields,field_description:l10n_ro_message_spv.field_l10n_ro_message_spv__message
@@ -320,6 +355,11 @@ msgstr ""
 #: model:ir.actions.server,name:l10n_ro_message_spv.ir_cron_res_company_download_message_spv_ir_actions_server
 msgid "Romania e-Invoicing: Download SPV Message"
 msgstr "Facturare electronică România: Descarcă mesaj SPV"
+
+#. module: l10n_ro_message_spv
+#: model:ir.actions.server,name:l10n_ro_message_spv.ir_cron_download_zip_message_spv_ir_actions_server
+msgid "Romania e-Invoicing: Download ZIP SPV Message"
+msgstr ""
 
 #. module: l10n_ro_message_spv
 #: model:ir.ui.menu,name:l10n_ro_message_spv.menu_l10n_ro_spv
