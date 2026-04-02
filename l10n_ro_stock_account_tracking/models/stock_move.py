@@ -30,7 +30,9 @@ class StockMove(models.Model):
                 move = move.with_company(move.company_id)
                 valued_move_lines = move._get_in_move_lines()
                 if not valued_move_lines and forced_quantity:
-                    unit_cost = abs(move._get_price_unit()[self.env["stock.lot"]])
+                    move.invalidate_recordset(fnames=['lot_ids'])
+                    price_unit_dict = move._get_price_unit()
+                    unit_cost = abs(price_unit_dict.get(self.env["stock.lot"], 0))
                     # May be negative (i.e. decrease an out move).
                     if move.product_id.cost_method == "standard":
                         unit_cost = move.product_id.standard_price
@@ -81,14 +83,24 @@ class StockMove(models.Model):
                                     origin_unit_cost * valued_quantity,
                                 )
                             ]
+                    move.invalidate_recordset(fnames=['lot_ids'])
                     if move.product_id.lot_valuated:
                         unit_cost = {lot: lot.standard_price for lot in move.lot_ids}
+                        # Ensure current lot is in the dict even if lot_ids cache was stale
+                        if lot and lot not in unit_cost:
+                            unit_cost[lot] = lot.standard_price
                     else:
                         unit_cost = {
                             self.env["stock.lot"]: move.product_id.standard_price
                         }
                     if move.product_id.cost_method != "standard":
                         unit_cost = move._get_price_unit()
+                        # Fallback if lot not found in price dict (cache timing issue)
+                        if lot not in unit_cost:
+                            unit_cost[lot] = unit_cost.get(
+                                self.env["stock.lot"],
+                                move.product_id.standard_price
+                            )
 
                     # May be negative (i.e. decrease an out move).
                     if move.product_id.lot_valuated:
@@ -100,7 +112,7 @@ class StockMove(models.Model):
                     else:
                         svl_vals = move.product_id._prepare_in_svl_vals(
                             forced_quantity or valued_quantity,
-                            abs(unit_cost[self.env["stock.lot"]]),
+                            abs(unit_cost.get(self.env["stock.lot"], 0)),
                         )
                     svl_vals.update(move._prepare_common_svl_vals())
                     # if valued_move_line.lot_id:
